@@ -1,5 +1,6 @@
 package com.example.android.pollutioninfo;
 
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity{
     EditText editText;
     TextView instruction;
     TextView heading;
+    TextView aqi_name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity{
         editText = findViewById(R.id.editText);
         instruction = findViewById(R.id.instructions);
         heading = findViewById(R.id.heading);
+        aqi_name = findViewById(R.id.aqi_name);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +55,15 @@ public class MainActivity extends AppCompatActivity{
             textView.setText(s);
             int magnitude = Integer.valueOf(s);
             GradientDrawable magnitudeCircle = (GradientDrawable) textView.getBackground();
-            if(magnitude>=0 && magnitude<=50) {
+            if(magnitude<0){
+                aqi_name.setVisibility(View.INVISIBLE);
+                textView.setText("No data found for this city.");
+                magnitudeCircle.setColor(getResources().getColor(R.color.white));
+                textView.setTextColor(getResources().getColor(R.color.black));
+                instruction.setText("Enter correct city name or try entering another city name.");
+                heading.setText("");
+            }
+            else if(magnitude>=0 && magnitude<=50) {
                 magnitudeCircle.setColor(getResources().getColor(R.color.Good));
                 heading.setText("Good");
                 instruction.setText(R.string.Good);

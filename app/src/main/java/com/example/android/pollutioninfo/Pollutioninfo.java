@@ -23,7 +23,7 @@ public class Pollutioninfo {
 
     private static final String LOG_TAG = Pollutioninfo.class.getSimpleName();
     public static String fetchPollutiondata(String JsonResponse) {
-        String aqi = "";
+        String aqi;
         String response="";
         URL url = createUrl(JsonResponse);
         try {
@@ -36,7 +36,7 @@ public class Pollutioninfo {
             JSONObject data = baseJsonResponse.getJSONObject("data");
             aqi = String.valueOf(data.getInt("aqi"));
         } catch (JSONException e) {
-            Log.e(LOG_TAG, "problem in key", e);
+            aqi = "-1";
         }
         return aqi;
     }
@@ -61,7 +61,6 @@ public class Pollutioninfo {
         }
         HttpURLConnection urlConnection =null;
         InputStream inputStream = null;
-    if(URLUtil.isValidUrl(String.valueOf(url)) && Patterns.WEB_URL.matcher(String.valueOf(url)).matches()) {
     try {
         urlConnection = (HttpURLConnection) url.openConnection();
         urlConnection.setReadTimeout(10000 /* milliseconds */);
@@ -78,7 +77,9 @@ public class Pollutioninfo {
             Log.e(LOG_TAG, "Error response code:" + urlConnection.getResponseCode());
         }
     } catch (IOException e) {
-        Log.e(LOG_TAG, "problem receiving the earthquake JSON results", e);
+
+        return jsonResponse;
+
     } finally {
         if (urlConnection != null) {
             urlConnection.disconnect();
@@ -90,7 +91,6 @@ public class Pollutioninfo {
             inputStream.close();
         }
     }
-}
         return jsonResponse;
     }
     private static String readFromStream(InputStream inputStream) throws IOException
