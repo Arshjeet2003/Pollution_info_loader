@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Apps/PollutionInfo/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Apps/PollutionInfo/app/src/main/res/drawable/aqi_circle.xml" value="0.15092592592592594" />
+        <entry key="..\:/Apps/PollutionInfo/app/src/main/res/drawable/magnitude_circle.xml" value="0.15092592592592594" />
+        <entry key="..\:/Apps/PollutionInfo/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Apps/PollutionInfo/app/src/main/res/layout/activity_pollutioninfo.xml" value="0.19583333333333333" />
       </map>
     </option>

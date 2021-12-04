@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Pollution Info</string>
+    <string name="Good">Air quality is considered satisfactory, and air pollution poses little or no risk.</string>
+    <string name="Satisfactory">Air quality is acceptable. However, may be a moderate health concern for people sensitive to air pollution.</string>
+    <string name="Moderate">Members of sensitive groups may experience health effects. The general public is not likely to be affected.</string>
+    <string name="Unhealthy">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</string>
+<string name="Very_Unhealthy">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
+    <string name="Hazardous">Health alert: everyone may experience more serious health effects.</string>
 </resources>

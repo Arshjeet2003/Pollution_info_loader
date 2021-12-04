@@ -1,7 +1,11 @@
 package com.example.android.pollutioninfo;
 
 import android.util.Log;
+import android.util.Patterns;
+import android.webkit.URLUtil;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +36,7 @@ public class Pollutioninfo {
             JSONObject data = baseJsonResponse.getJSONObject("data");
             aqi = String.valueOf(data.getInt("aqi"));
         } catch (JSONException e) {
+            Log.e(LOG_TAG, "problem in key", e);
         }
         return aqi;
     }
@@ -56,38 +61,36 @@ public class Pollutioninfo {
         }
         HttpURLConnection urlConnection =null;
         InputStream inputStream = null;
+    if(URLUtil.isValidUrl(String.valueOf(url)) && Patterns.WEB_URL.matcher(String.valueOf(url)).matches()) {
+    try {
+        urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setReadTimeout(10000 /* milliseconds */);
+        urlConnection.setConnectTimeout(15000 /* milliseconds */);
+        urlConnection.setRequestMethod("GET");
+        urlConnection.connect();
 
-        try {
-            urlConnection =(HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-
-            // If the request was successful (response code 200),
-            // then read the input stream and parse the response.
-            if(urlConnection.getResponseCode()==200){
-                inputStream = urlConnection.getInputStream();
-                jsonResponse= readFromStream(inputStream);
-            }else{
-                Log.e(LOG_TAG , "Error response code:" + urlConnection.getResponseCode());
-            }
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "problem receiving the earthquake JSON results", e);
-        } finally {
-            if(urlConnection!=null)
-            {
-                urlConnection.disconnect();
-            }
-            if(inputStream!=null)
-            {
-                // Closing the input stream could throw an IOException, which is why
-                // the makeHttpRequest(URL url) method signature specifies than an IOException
-                // could be thrown.
-                inputStream.close();
-            }
+        // If the request was successful (response code 200),
+        // then read the input stream and parse the response.
+        if (urlConnection.getResponseCode() == 200) {
+            inputStream = urlConnection.getInputStream();
+            jsonResponse = readFromStream(inputStream);
+        } else {
+            Log.e(LOG_TAG, "Error response code:" + urlConnection.getResponseCode());
         }
-
+    } catch (IOException e) {
+        Log.e(LOG_TAG, "problem receiving the earthquake JSON results", e);
+    } finally {
+        if (urlConnection != null) {
+            urlConnection.disconnect();
+        }
+        if (inputStream != null) {
+            // Closing the input stream could throw an IOException, which is why
+            // the makeHttpRequest(URL url) method signature specifies than an IOException
+            // could be thrown.
+            inputStream.close();
+        }
+    }
+}
         return jsonResponse;
     }
     private static String readFromStream(InputStream inputStream) throws IOException
