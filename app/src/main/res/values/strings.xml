@@ -6,4 +6,5 @@
     <string name="Unhealthy">Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</string>
 <string name="Very_Unhealthy">Health warnings of emergency conditions. The entire population is more likely to be affected.</string>
     <string name="Hazardous">Health alert: everyone may experience more serious health effects.</string>
+    <string name="No_data">No data found.</string>
 </resources>
